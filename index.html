@@ -3,223 +3,139 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>It's Saturday — Christmas Banner</title>
+  <title>It's Saturday — 客製化聖誕樹香氛蠟燭</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400&display=swap" rel="stylesheet">
-  <!-- 英文字體：Adobe Fonts「collier」 -->
-  <link rel="stylesheet" href="https://use.typekit.net/uzq8cud.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500;700&family=Noto+Serif+TC:wght@400&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* ══════════ 顏色設定 ══════════ */
+      /* ══════════ 顏色 ══════════ */
       --bg: #d9d3cc;               /* 圖片載入前的底色 */
       --text: #ffffff;             /* 文字顏色 */
 
-      /* ══════════ 字型設定 ══════════ */
-      --font-en: "collier", serif;               /* 英文 */
-      --font-zh: 'Noto Sans TC', sans-serif;     /* 中文 */
-      --font-title: 'Noto Serif TC', serif;      /* 大標：明體（接近排版用的「中明體」） */
-
-      /* ══════════ 文字大小（單位 = 設計稿上的 px，設計稿 800×1100，畫面縮放時自動等比例） ══════════ */
-      --kicker-size: 26;           /* 「客製化聖誕樹香氛蠟燭」 */
-      --title-size: 55;            /* 大標「今年聖誕樹，由你親自設計」 */
-      --sub-size: 24;              /* 「自由選色、搭配香氣／堆疊一棵…」 */
-      --en-size: 26;               /* 「A Christmas That Feels Like You.」 */
-      --date-size: 36;             /* 「11.21 SAT · 21:00」 */
-      --cta-size: 34;              /* 「開放預購」 */
-
-      /* ══════════ 文字位置（設計稿上的 px） ══════════ */
-      --y-kicker: 115;             /* 距離頂端：客製化聖誕樹香氛蠟燭 */
-      --y-title: 176;              /* 距離頂端：大標 */
-      --y-sub1: 287;               /* 距離頂端：自由選色、搭配香氣 */
-      --y-sub2: 334;               /* 距離頂端：堆疊一棵專屬香氛聖誕樹 */
-      --y-en: 387;                 /* 距離頂端：英文 */
-      --b-date: 146;               /* 距離底端：日期 */
-      --b-cta: 94;                 /* 距離底端：開放預購 */
-
-      /* ══════════ 版面設定 ══════════ */
+      /* ══════════ 版面 ══════════ */
       --height-pc: 600px;          /* 電腦版高度 */
       --height-tab: 740px;         /* 平板版高度 */
-      --ratio-m: 800 / 1100;       /* 手機版比例（800×1100） */
-      --focus-pc: center;          /* 電腦／平板圖片裁切重心 */
+      --ratio-m: 800 / 1100;       /* 手機版比例 */
       --focus-m: center;           /* 手機圖片裁切重心 */
+      --focus-pc: center;          /* 電腦／平板圖片裁切重心 */
 
-      /* ══════════ 輪播設定 ══════════ */
-      --fade: 1.2s;                /* 換圖時淡入淡出的時間（每張停留秒數在最下方 script 設定） */
+      /* ══════════ 電腦版文字 ══════════ */
+      --pc-scale-top: 1.2;        /* 上段文字放大倍數（1.2 = 放大 20%） */
+      --pc-scale-bottom: 1;     /* 下段文字放大倍數 */
+      --pc-x: 50%;                /* 文字水平位置（50% = 置中） */
+
+      /* ══════════ 輪播 ══════════ */
+      --fade: 1.2s;                /* 淡入淡出時間（停留秒數在最下方 script） */
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; background: var(--bg); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-    html, body {
-      width: 100%;
-      background: var(--bg);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ===== 外框：底圖鋪滿 ===== */
-    .banner {
-      position: relative;
-      aspect-ratio: var(--ratio-m);
-      width: 100%;
-      background: var(--bg);
-      overflow: hidden;
-    }
+    /* ===== 外框 ===== */
+    .banner { position: relative; aspect-ratio: var(--ratio-m); width: 100%; background: var(--bg); overflow: hidden; }
     .banner img {
-      position: absolute;
-      inset: 0;
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: var(--focus-m);
-      color: transparent;
-      background: var(--bg);
+      position: absolute; inset: 0; display: block; width: 100%; height: 100%;
+      object-fit: cover; object-position: var(--focus-m); color: transparent; background: var(--bg);
     }
 
-    /* ===== 輪播：每張底圖疊在一起，輪流淡入 ===== */
-    .slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity var(--fade) ease;
-    }
-    .slide.is-active {
-      opacity: 1;
-    }
+    /* ===== 底圖（多張時輪流淡入） ===== */
+    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity var(--fade) ease; }
+    .slide.is-active { opacity: 1; }
 
-    /* ===== 文字區：疊在底圖上，依設計稿等比例縮放 ===== */
-    .copy-area {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      container-type: size;
-    }
+    /* ===== 文字：依設計稿等比例縮放 ===== */
+    .copy-area { position: absolute; inset: 0; z-index: 1; container-type: size; }
     .copy {
-      --u: calc(100cqw / 800);     /* 手機：設計稿寬 800px */
-      position: absolute;
-      inset: 0;
-      color: var(--text);
-      font-family: var(--font-zh);
-      font-weight: 400;
-      text-align: center;
+      --u: calc(100cqw / 800);      /* 手機：設計稿寬 800px */
+      --ut: var(--u);                /* 上段 */
+      --ub: var(--u);                /* 下段 */
+      position: absolute; inset: 0; color: var(--text); text-align: center;
     }
-    .copy .line {
-      position: absolute;
-      left: 0;
-      right: 0;
-      line-height: 1;
-      white-space: nowrap;
-    }
+    .group { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; }
+    .line { line-height: 1; white-space: nowrap; }
 
-    /* 客製化聖誕樹香氛蠟燭 */
-    .kicker {
-      top: calc(var(--y-kicker) * var(--u));
-      font-size: calc(var(--kicker-size) * var(--u));
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      padding-left: 0.15em;        /* 抵銷字距，讓置中更準 */
-    }
-
+    /* ── 上段：第一行距離頂端 70px，往下一行接一行 ── */
+    .group-top { top: calc(70 * var(--ut)); }
     /* 今年聖誕樹，由你親自設計 */
-    .title {
-      top: calc(var(--y-title) * var(--u));
-      font-family: var(--font-title);
-      font-size: calc(var(--title-size) * var(--u));
-      font-weight: 400;
-      letter-spacing: 0;
+    .l1 {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: calc(26 * var(--ut));
+      font-weight: 300;
+      letter-spacing: 0.15em; padding-left: 0.15em;   /* 抵銷字距讓置中更準 */
     }
-
-    /* 自由選色、搭配香氣／堆疊一棵專屬香氛聖誕樹 */
-    .sub {
-      font-size: calc(var(--sub-size) * var(--u));
+    /* 客製工藝 */
+    .l2 {
+      margin-top: calc(60 * var(--ut));   /* 和上一行的間距 */
+      font-family: 'Noto Serif TC', serif;
+      font-size: calc(55 * var(--ut));
+      font-weight: 400;
+      letter-spacing: 0em;
+    }
+    /* 聖誕樹香氛蠟燭 */
+    .l3 {
+      margin-top: calc(20 * var(--ut));   /* 和上一行的間距 */
+      font-family: 'Noto Serif TC', serif;
+      font-size: calc(55 * var(--ut));
+      font-weight: 400;
+      letter-spacing: 0em;
+    }
+    /* 自由選色、搭配香氣 */
+    .l4 {
+      margin-top: calc(30 * var(--ut));   /* 和上一行的間距 */
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: calc(24 * var(--ut));
       font-weight: 500;
-      letter-spacing: 0.2em;
-      padding-left: 0.2em;
+      letter-spacing: 0.2em; padding-left: 0.2em;   /* 抵銷字距讓置中更準 */
     }
-    .sub1 { top: calc(var(--y-sub1) * var(--u)); }
-    .sub2 { top: calc(var(--y-sub2) * var(--u)); }
-
-    /* A Christmas That Feels Like You. */
-    .en {
-      top: calc(var(--y-en) * var(--u));
-      font-family: var(--font-en);
-      font-size: calc(var(--en-size) * var(--u));
-      font-weight: 400;
-      letter-spacing: 0.01em;
+    /* 堆疊一棵專屬香氛禮物 */
+    .l5 {
+      margin-top: calc(15 * var(--ut));   /* 和上一行的間距 */
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: calc(24 * var(--ut));
+      font-weight: 500;
+      letter-spacing: 0.2em; padding-left: 0.2em;   /* 抵銷字距讓置中更準 */
     }
 
+    /* ── 下段：最後一行距離底端 70px，往上一行接一行 ── */
+    .group-bottom { bottom: calc(70 * var(--ub)); }
     /* 11.21 SAT · 21:00 */
-    .date {
-      bottom: calc(var(--b-date) * var(--u));
-      font-size: calc(var(--date-size) * var(--u));
-      font-weight: 700;
-      letter-spacing: 0.02em;
+    .l6 {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: calc(36 * var(--ub));
+      font-weight: 500;
+      letter-spacing: 0.02em; padding-left: 0.02em;   /* 抵銷字距讓置中更準 */
     }
-
     /* 開放預購 */
-    .cta {
-      bottom: calc(var(--b-cta) * var(--u));
-      font-size: calc(var(--cta-size) * var(--u));
+    .l7 {
+      margin-top: calc(18 * var(--ub));   /* 和上一行的間距 */
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: calc(34 * var(--ub));
       font-weight: 700;
-      letter-spacing: 0.12em;
-      padding-left: 0.12em;
+      letter-spacing: 0.12em; padding-left: 0.12em;   /* 抵銷字距讓置中更準 */
     }
 
-    /* ===== 平板＋電腦（768px 以上）：整組文字依高度等比例縮放 ===== */
+    /* ===== 平板＋電腦（768px 以上）：依高度縮放 ===== */
     @media (min-width: 768px) {
-      .banner img {
-        object-position: var(--focus-pc);
-      }
+      .banner img { object-position: var(--focus-pc); }
       .copy {
         --u: calc(100cqh / 1100);
+        --ut: calc(var(--u) * var(--pc-scale-top));
+        --ub: calc(var(--u) * var(--pc-scale-bottom));
       }
-      /* 電腦版上面那段（客製化…～英文）放大：1.2 = 放大 20%，要調整就改這個數字 */
-      .copy .kicker,
-      .copy .title,
-      .copy .sub,
-      .copy .en {
-        --u: calc(100cqh / 1100 * 1.2);
-      }
+      .group { left: var(--pc-x); right: auto; transform: translateX(-50%); }
     }
+    @media (min-width: 768px) and (max-width: 1023px) { .banner { aspect-ratio: auto; height: var(--height-tab); } }
+    @media (min-width: 1024px) { .banner { aspect-ratio: auto; height: var(--height-pc); } }
 
-    /* ===== 平板（768–1023px）：高度 740px ===== */
-    @media (min-width: 768px) and (max-width: 1023px) {
-      .banner {
-        aspect-ratio: auto;
-        height: var(--height-tab);
-      }
-    }
-
-    /* ===== 電腦（1024px 以上）：高度 600px ===== */
-    @media (min-width: 1024px) {
-      .banner {
-        aspect-ratio: auto;
-        height: var(--height-pc);
-      }
-    }
-
-    /* ===== 整張 banner 可點擊的連結 ===== */
-    .banner-link {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      display: block;
-    }
+    /* ===== 整張可點擊 ===== */
+    .banner-link { position: absolute; inset: 0; z-index: 2; display: block; }
   </style>
 </head>
 <body>
   <div class="banner">
 
-    <!-- ══════════ 輪播底圖 ══════════
-         ・一個 <picture class="slide"> 就是一張，要加圖就整段複製（貼在 copy-area 前面）
-         ・第一張要保留 is-active（一打開就顯示的那張），其他張不要加
-         ・source = 手機版（800×1100）、img = 電腦／平板
-         ・只放一張就不會輪播 -->
+    <!-- ══════════ 底圖 ══════════
+         source = 手機版、img = 電腦／平板；第 1 張要有 is-active -->
 
     <!-- 第 1 張 -->
     <picture class="slide is-active">
@@ -241,40 +157,38 @@
 
     <div class="copy-area">
       <div class="copy">
-        <p class="line kicker">客製化聖誕樹香氛蠟燭</p>
-        <h2 class="line title">今年聖誕樹，由你親自設計</h2>
-        <p class="line sub sub1">自由選色、搭配香氣</p>
-        <p class="line sub sub2">堆疊一棵專屬香氛聖誕樹</p>
-        <p class="line en">A Christmas That Feels Like You.</p>
-        <p class="line date">11.21 SAT · 21:00</p>
-        <p class="line cta">開放預購</p>
+        <div class="group group-top">
+          <p class="line l1">今年聖誕樹，由你親自設計</p>
+          <p class="line l2">客製工藝</p>
+          <p class="line l3">聖誕樹香氛蠟燭</p>
+          <p class="line l4">自由選色、搭配香氣</p>
+          <p class="line l5">堆疊一棵專屬香氛禮物</p>
+        </div>
+        <div class="group group-bottom">
+          <p class="line l6">11.21 SAT · 21:00</p>
+          <p class="line l7">開放預購</p>
+        </div>
       </div>
     </div>
 
-    <!-- 點擊連結：把 href 換成你要的網址；想開新分頁就把 _top 改成 _blank -->
-    <a class="banner-link" href="https://its-saturday.com/page/doing-nothing" target="_top" aria-label="客製化聖誕樹香氛蠟燭 開放預購"></a>
+    <a class="banner-link" href="https://its-saturday.com/page/doing-nothing" target="_top" aria-label="客製化聖誕樹香氛蠟燭"></a>
 
   </div>
 
   <script>
     /* ===== 輪播 ===== */
     (function () {
-      var INTERVAL = 4000;   /* 每張停留時間（毫秒），4000 = 4 秒 */
-
+      var INTERVAL = 4000;   /* 每張停留時間（毫秒） */
       var slides = document.querySelectorAll(".slide");
       if (slides.length < 2) return;
+      var current = 0, timer = null;
 
-      var current = 0;
-      var timer = null;
-
-      /* 圖片已經載入成功才切換，避免切到一半看到空白底色 */
+      /* 圖片載好才切換，避免看到空白 */
       function isReady(slide) {
         var img = slide.querySelector("img");
         return img && img.complete && img.naturalWidth > 0;
       }
-
       function next() {
-        /* 找下一張已載好的圖；壞掉或還沒載好的先跳過 */
         for (var step = 1; step < slides.length; step++) {
           var n = (current + step) % slides.length;
           if (isReady(slides[n])) {
@@ -285,45 +199,34 @@
             return;
           }
         }
-        schedule(1000);      /* 其他張都還沒好，1 秒後再試 */
+        schedule(1000);
       }
+      function schedule(ms) { clearTimeout(timer); timer = setTimeout(next, ms); }
 
-      function schedule(ms) {
-        clearTimeout(timer);
-        timer = setTimeout(next, ms);
-      }
-
-      /* 切到別的分頁時暫停，回來再繼續，避免回來時連跳好幾張 */
+      /* 切到別的分頁時暫停 */
       document.addEventListener("visibilitychange", function () {
-        if (document.hidden) clearTimeout(timer);
-        else schedule(INTERVAL);
+        if (document.hidden) clearTimeout(timer); else schedule(INTERVAL);
       });
-
       schedule(INTERVAL);
     })();
 
-    /* ===== 把內容的實際高度回報給 BVShop 頁面，讓框框高度自動剛好 ===== */
+    /* ===== 回報高度給 BVShop 頁面 ===== */
     (function () {
+      var ID = "isp-bnr-20261113-christmas";   /* 要和嵌入碼裡的代號一樣 */
       var banner = document.querySelector(".banner");
       var last = 0;
-
-      /* force = true 時就算高度沒變也重送一次（避免 BVShop 頁面較晚準備好而漏收） */
       function report(force) {
         var h = Math.ceil(banner.getBoundingClientRect().height);
         if (h && (force === true || h !== last)) {
           last = h;
-          window.parent.postMessage({ ispBannerHeight: h, ispBannerId: "isp-summer-banner" }, "*");
+          window.parent.postMessage({ ispBannerHeight: h, ispBannerId: ID }, "*");
         }
       }
       function forceReport() { report(true); }
-
       window.addEventListener("load", forceReport);
       window.addEventListener("resize", function () { report(false); });
-      if (window.ResizeObserver) {
-        new ResizeObserver(function () { report(false); }).observe(banner);
-      }
+      if (window.ResizeObserver) new ResizeObserver(function () { report(false); }).observe(banner);
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(forceReport);
-
       report(true);
       setTimeout(forceReport, 500);
       setTimeout(forceReport, 1500);
