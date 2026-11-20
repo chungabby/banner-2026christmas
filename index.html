@@ -44,7 +44,7 @@
     .slide.is-active { opacity: 1; }
 
     /* ===== 文字：依設計稿等比例縮放 ===== */
-    .copy-area { position: absolute; inset: 0; z-index: 1; container-type: size; }
+    .copy-area { position: absolute; inset: 0; z-index: 3; container-type: size; pointer-events: none; }   /* 文字在連結上方，但點擊穿透到整張連結 */
     .copy {
       --u: calc(100cqw / 800);      /* 手機：設計稿寬 800px */
       --ut: var(--u);                /* 上段 */
@@ -96,23 +96,25 @@
       letter-spacing: 0.2em; padding-left: 0.2em;   /* 抵銷字距讓置中更準 */
     }
 
-    /* ── 下段：最後一行距離底端 70px，往上一行接一行 ── */
-    .group-bottom { bottom: calc(70 * var(--ub)); }
-    /* 11.21 SAT · 21:00 */
-    .l6 {
+    /* ── 下段：按鈕，距離底端 70px ── */
+    .group-bottom { bottom: calc(70 * var(--ub)); z-index: 3; }
+    /* 馬上訂製與選購 */
+    .btn {
+      display: flex; align-items: center; justify-content: center;
+      width: calc(420 * var(--ub)); min-width: 180px;
+      height: calc(100 * var(--ub)); min-height: 44px;
+      padding-left: 0.14em;                            /* 抵銷字距讓置中更準 */
+      background: #f7f3ef; color: #1d1112; text-decoration: none;
       font-family: 'Noto Sans TC', sans-serif;
-      font-size: calc(36 * var(--ub));
+      font-size: max(14px, calc(30 * var(--ub)));
       font-weight: 500;
-      letter-spacing: 0.02em; padding-left: 0.02em;   /* 抵銷字距讓置中更準 */
+      letter-spacing: 0.14em; white-space: nowrap;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .18);
+      pointer-events: auto;
+      transition: transform .3s cubic-bezier(.2, .8, .2, 1), background .3s, box-shadow .3s;
     }
-    /* 開放預購 */
-    .l7 {
-      margin-top: calc(18 * var(--ub));   /* 和上一行的間距 */
-      font-family: 'Noto Sans TC', sans-serif;
-      font-size: calc(34 * var(--ub));
-      font-weight: 700;
-      letter-spacing: 0.12em; padding-left: 0.12em;   /* 抵銷字距讓置中更準 */
-    }
+    .btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0, 0, 0, .2); }
+    .btn:active { transform: translateY(0) scale(.99); }
 
     /* ===== 平板＋電腦（768px 以上）：依高度縮放 ===== */
     @media (min-width: 768px) {
@@ -165,13 +167,12 @@
           <p class="line l5">堆疊一棵專屬香氛禮物</p>
         </div>
         <div class="group group-bottom">
-          <p class="line l6">11.21 SAT · 21:00</p>
-          <p class="line l7">開放預購</p>
+          <a class="btn" href="https://its-saturday.com/item/christmas-tree-000" target="_top">馬上訂製與選購</a>
         </div>
       </div>
     </div>
 
-    <a class="banner-link" href="https://its-saturday.com/page/doing-nothing" target="_top" aria-label="客製化聖誕樹香氛蠟燭"></a>
+    <a class="banner-link" href="https://its-saturday.com/item/christmas-tree-000" target="_top" aria-label="客製化聖誕樹香氛蠟燭"></a>
 
   </div>
 
